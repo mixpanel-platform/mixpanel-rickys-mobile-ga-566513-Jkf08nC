@@ -9,7 +9,49 @@
     <h1>Hello, World!</h1>
     <script>
       MP.api.ready(function() {
-        // Run queries and display results here
+        var lastWeek = moment().subtract(14, 'days');
+      	var twoWeeksAgo = moment().subtract(21, 'days');
+      	var threeWeeksAgo = moment().subtract(28, 'days');
+      	
+      	thisWeek_params = {
+      		from: twoWeeksAgo,
+      		to: lastWeek,
+      		unit: 'day',
+      	}
+      	
+      	lastWeek_params = {
+      		from: threeWeeksAgo,
+      		to: twoWeeksAgo,
+      		unit: 'day',
+      		type: 'general'
+      	}
+      	
+      	MP.api.segment('Game Played', 'Campaign Source', thisWeek_params).done(function(result) {
+      		MP.api.segment('Game Played', 'Campaign Source', lastWeek_params).done(function(res) {
+      			thisWeekData = {};
+      			i = 0;
+      			for (each in result.json["Twitter"]) {
+      				thisWeekData[i] = result.json["Twitter"][each];
+      				i++;
+      			}
+      			
+      			lastWeekData = {};
+      			j = 0;
+      			for (each in res.json["Twitter"]) {
+      				lastWeekData[j] = res.json["Twitter"][each];
+      				j++;
+      			}
+      			
+      			console.log(lastWeekData);
+      			console.log(thisWeekData);
+      			
+      			totalData = {'last week': lastWeekData, 'this week': thisWeekData};
+      			
+      			$('<div id="bar-chart-demo">').appendTo('body').MPChart({
+            		chartType: 'line',
+            		data: totalData
+          		});
+        	});
       });
     </script>
   </body>
