@@ -27,20 +27,21 @@
       	
       	MP.api.segment('Game Played', 'Campaign Source', thisWeek_params).done(function(result) {
       		MP.api.segment('Game Played', 'Campaign Source', lastWeek_params).done(function(res) {
-      			thisWeekData = [];
+      			thisWeekData = {};
       			i = 0;
       			for (each in result.json["Twitter"]) {
-      				thisWeekData.push(result.json["Twitter"][each]);
+      				thisWeekData[i] = result.json["Twitter"][each];
       				i++;
       			}
       			
-      			lastWeekData = [];
+      			lastWeekData = {};
       			j = 0;
       			for (each in res.json["Twitter"]) {
-      				lastWeekData.push(res.json["Twitter"][each]);
+      				lastWeekData[j] = res.json["Twitter"][each];
       				j++;
       			}
       			
+      			console.log(lastWeekData);
       			totalData = {'last week': lastWeekData, 'this week': thisWeekData};
       			
       			$('<div id="bar-chart-demo">').appendTo('body').MPChart({
