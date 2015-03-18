@@ -8,9 +8,9 @@
   <body class="mixpanel-platform-body">
     <script>
       MP.api.ready(function() {
-        var lastWeek = moment().subtract(14, 'days');
-      	var twoWeeksAgo = moment().subtract(21, 'days');
-      	var threeWeeksAgo = moment().subtract(28, 'days');
+        var lastWeek = moment().subtract(15, 'days');
+      	var twoWeeksAgo = moment().subtract(22, 'days');
+      	var threeWeeksAgo = moment().subtract(29, 'days');
       	
       	thisWeek_params = {
       		from: twoWeeksAgo,
@@ -27,17 +27,17 @@
       	
       	MP.api.segment('Game Played', 'Campaign Source', thisWeek_params).done(function(result) {
       		MP.api.segment('Game Played', 'Campaign Source', lastWeek_params).done(function(res) {
-      			thisWeekData = {};
+      			thisWeekData = [];
       			i = 0;
       			for (each in result.json["Twitter"]) {
-      				thisWeekData[i] = result.json["Twitter"][each];
+      				thisWeekData.push(result.json["Twitter"][each]);
       				i++;
       			}
       			
-      			lastWeekData = {};
+      			lastWeekData = [];
       			j = 0;
       			for (each in res.json["Twitter"]) {
-      				lastWeekData[j] = res.json["Twitter"][each];
+      				lastWeekData.push(res.json["Twitter"][each]);
       				j++;
       			}
       			
