@@ -30,17 +30,19 @@
       			thisWeekData = {};
       			i = 0;
       			for (each in result.json["Twitter"]) {
-      				thisWeekData[i] = result.json["Twitter"][each];
+      				var date = moment().subtract(i, 'days');
+      				thisWeekData[date] = result.json["Twitter"][each];
       				i++;
       			}
       			
       			lastWeekData = {};
       			j = 0;
       			for (each in res.json["Twitter"]) {
-      				lastWeekData[j] = res.json["Twitter"][each];
+      				var date = moment().subtract(j, 'days');
+      				lastWeekData[date] = res.json["Twitter"][each];
       				j++;
       			}
-      			
+      		  
       			totalData = {'last week': lastWeekData, 'this week': thisWeekData};
       			
       			$('<div id="bar-chart-demo">').appendTo('body').MPChart({
